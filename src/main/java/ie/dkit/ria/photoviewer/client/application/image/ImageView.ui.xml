@@ -1,0 +1,17 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:b="urn:import:org.gwtbootstrap3.client.ui"
+        >
+    <b:Container>
+        <b:Row>
+            <b:Column size="LG_12">
+                <b:Image ui:field="imageElement" addStyleNames="image-full-view"/>
+            </b:Column>
+        </b:Row>
+        <b:Row>
+            <b:Column ui:field="exifContainer" addStyleNames="detail-container" size="XS_6">
+            </b:Column>
+            <b:Column ui:field="amazonContainer" addStyleNames="detail-container" size="XS_5">
+            </b:Column>
+        </b:Row>
+    </b:Container>
+</ui:UiBinder>
