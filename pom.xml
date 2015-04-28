@@ -126,6 +126,11 @@
             <artifactId>wss4j</artifactId>
             <version>1.6.18</version>
         </dependency>
+        <dependency>
+            <groupId>xalan</groupId>
+            <artifactId>xalan</artifactId>
+            <version>2.7.1</version>
+        </dependency>
 
 
         <dependency>
@@ -174,6 +179,11 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>log4j</groupId>
@@ -196,7 +206,7 @@
             <plugin>
                 <groupId>org.apache.axis2</groupId>
                 <artifactId>axis2-wsdl2code-maven-plugin</artifactId>
-                <version>1.6.2</version>
+                <version>${axis2.version}</version>
                 <configuration>
                     <packageName>com.amazon.advertising.api</packageName>
                     <wsdlFile>src/main/resources/wsdl/AWSECommerceService.wsdl</wsdlFile>
@@ -220,6 +230,7 @@
                 <executions>
                     <execution>
                         <goals>
+                            <goal>resources</goal>
                             <goal>compile</goal>
                             <goal>test</goal>
                             <goal>resources</goal>
@@ -234,7 +245,13 @@
                 <inherited>true</inherited>
                 <configuration>
                     <runTarget>PhotoViewer.html</runTarget>
+                    <extraJvmArgs>-Xmx512m</extraJvmArgs>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
+                    <!--<webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>-->
+                    <packageNamePerModule>
+                        <hello>org.codehaus.mojo.gwt.test.server</hello>
+                    </packageNamePerModule>
+                    <scanRemoteServiceRelativePathAnnotation>true</scanRemoteServiceRelativePathAnnotation>
                 </configuration>
             </plugin>
         </plugins>

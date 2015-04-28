@@ -54,7 +54,6 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 
     @UiHandler("toTopButton")
     public void handleClick(ClickEvent event) {
-        console.log("start scrolling to top");
         WindowScrollAnimation animation = new WindowScrollAnimation(window);
         animation.scrollTo(0, 1500);
     }
