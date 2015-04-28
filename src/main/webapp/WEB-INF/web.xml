@@ -18,15 +18,17 @@
         </servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ie.dkit.ria.photoviewer.PhotoViewer AmazonService</servlet-name>
-        <servlet-class>ie.dkit.ria.photoviewer.server.service.amazon.AmazonServiceImpl</servlet-class>
+        <servlet-name>AmazonService</servlet-name>
+        <servlet-class>
+            ie.dkit.ria.photoviewer.server.service.amazon.AmazonServiceImpl
+        </servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FlickrServiceImpl</servlet-name>
         <url-pattern>/PhotoViewer/flickr</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ie.dkit.ria.photoviewer.PhotoViewer AmazonService</servlet-name>
+        <servlet-name>AmazonService</servlet-name>
         <url-pattern>/PhotoViewer/AmazonService</url-pattern>
     </servlet-mapping>
 </web-app>

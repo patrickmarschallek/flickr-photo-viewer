@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import ie.dkit.ria.photoviewer.client.service.amazon.AmazonService;
 import ie.dkit.ria.photoviewer.server.pojo.ServerArticle;
+import org.apache.log4j.Logger;
 
 import javax.xml.namespace.QName;
 import java.rmi.RemoteException;
@@ -19,6 +20,8 @@ import java.util.List;
  */
 public class AmazonServiceImpl extends RemoteServiceServlet implements AmazonService {
 
+    private static final Logger logger = Logger.getLogger(AmazonServiceImpl.class.getCanonicalName());
+
     private static final String endpoint = "https://webservices.amazon.co.uk/onca/soap?Service=AWSECommerceService";
     private static final String accessKey = "AKIAILOFAI74ZBFVGQBQ";
     private static final String secretKey = "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";
@@ -27,13 +30,16 @@ public class AmazonServiceImpl extends RemoteServiceServlet implements AmazonSer
 
     @Override
     public String fetchItem(String s) {
+        logger.debug("start fetching amazon data");
         List<ServerArticle> articles = new ArrayList<ServerArticle>();
         if (null != s && !s.isEmpty()) {
             try {
                 AWSECommerceServiceStub client = new AWSECommerceServiceStub(endpoint);
 
+                logger.debug("created amazon service client");
                 this.addSecurityHeader(client);
 
+                logger.debug("added amazon security header");
                 ItemSearchDocument doc = ItemSearchDocument.Factory.newInstance();
                 ItemSearchDocument.ItemSearch search = ItemSearchDocument.ItemSearch.Factory.newInstance();
                 ItemSearchRequest request = search.addNewRequest();
@@ -49,7 +55,10 @@ public class AmazonServiceImpl extends RemoteServiceServlet implements AmazonSer
                 request.setSearchIndex("All");
                 doc.setItemSearch(search);
 
+                logger.debug("defined amazon service request");
                 ItemSearchResponseDocument response = client.itemSearch(doc);
+
+                logger.debug("fetched amazon service data in a response");
                 ItemsDocument.Items[] itemsArray = response.getItemSearchResponse().getItemsArray();
                 for (ItemsDocument.Items items : itemsArray) {
                     int length = items.sizeOfItemArray();
@@ -73,13 +82,15 @@ public class AmazonServiceImpl extends RemoteServiceServlet implements AmazonSer
                     }
                 }
             } catch (RemoteException e) {
-                e.printStackTrace();
+                logger.warn(e);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.warn(e);
             }
+            logger.info("Build json response for amazon");
             String json = "{\"result\":" + (new Gson()).toJson(articles) + "}";
             return json;
         } else {
+            logger.info("No Camera in EXIF data");
             return "{\"result\":\"No Camera in EXIF data\"}";
         }
 

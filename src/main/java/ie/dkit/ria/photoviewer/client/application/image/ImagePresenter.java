@@ -23,6 +23,8 @@ import ie.dkit.ria.photoviewer.shared.pojo.Image;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.gwt.query.client.GQuery.console;
+
 /**
  * Created by patte on 15.04.15.
  */
@@ -69,9 +71,11 @@ public class ImagePresenter extends Presenter<ImagePresenter.MyView, ImagePresen
     }
 
     private void fetchAmazonData(String camera) {
+        console.log(camera);
         AmazonService.App.getInstance().fetchItem(camera, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable caught) {
+                        console.log(caught);
                         Util.showError("Error", caught.getMessage());
                     }
 
@@ -109,6 +113,7 @@ public class ImagePresenter extends Presenter<ImagePresenter.MyView, ImagePresen
         try {
             builder.sendRequest(null, new RequestCallback() {
                 public void onError(Request request, Throwable exception) {
+                    console.log(exception);
                     Util.showError("Error", exception.getMessage());
                 }
 
@@ -141,6 +146,7 @@ public class ImagePresenter extends Presenter<ImagePresenter.MyView, ImagePresen
                 }
             });
         } catch (RequestException e) {
+            console.log(e);
             Util.showError("Error", e.getMessage());
         }
     }
